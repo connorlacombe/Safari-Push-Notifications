@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Safari Push Notification Demo: Clicked Notification</title>
+
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	background: #EDEDED;
+	font-family: "Avenir Next", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.box {
+	border-radius: 8px;
+	background: #fff;
+	width: 600px;
+	height: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -300px;
+	margin-top: -150px;
+	border: 1px solid #CECECE;
+	box-shadow: rgba(255,255,255,0.7) 0 1px 0, inset rgba(0,0,0,0.1) 0 1px 2px;
+}
+</style>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=130173580455698";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+	<div style="background: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 899;" id="modal_scrim">
+    	<div class="modal">
+        	<div class="modal-header">
+            	<button type="button" class="close" onClick="$('#modal_scrim').fadeOut(300);" aria-hidden="true">&times;</button>
+            	<h3>Create Push Notification</h3>
+          	</div>
+        	<div class="modal-body form-horizontal" id="form">
+                <div class="control-group">
+                  <label class="control-label" for="not_title">Title</label>
+                  <div class="controls">
+                    <input type="text" id="not_title">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="not_title">Body</label>
+                  <div class="controls">
+                    <input type="text" id="not_body">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="not_title">Button Label</label>
+                  <div class="controls">
+                    <input type="text" id="not_button">
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-primary btn-small" onClick="do_push();">Push!</div>
+            </div>
+        </div>
+    </div>
+	<div class="box">
+    	<div style="font-weight: 500; font-size: 20px; margin: 20px;">Pretty cool, eh?</div>
+        <div style="padding: 20px;">
+        <strong>What just happened?</strong>
+        <div>When you allowed this website to send you push notifications, we generated a 4 digit code and put it in a database along with your Mac's push token. When a push notification is triggered through our servers, we resolve the 4 digit code to your Mac's token. Once we have your token, we tell Apple's servers what the notification should look like, and where it should go. Apple's push notification service then delivers the notification we generated to your Mac.</div>
+        <div style="margin-top: 30px; font-size: 11px; text-align: center;">Don't forget to share this demo to other developers so they can see what OS X Mavericks has to offer!</div>
+        </div>
+    </div>
+    <div style="position: absolute; top: 50%; margin-top: 170px; left: 50%; width: 600px; text-align: center; margin-left: -300px; text-shadow: #fff 0 1px 0;">
+    <a href="https://twitter.com/mynamesconnor" class="twitter-follow-button" data-show-count="false">Follow @mynamesconnor</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    	<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://kandutech.net" data-via="mynamesconnor" data-related="mynamesconnor">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone" data-size="medium" data-href="https://kandutech.net"></div>
+
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<div class="fb-like" data-href="https://kandutech.net" data-send="false" data-layout="button_count" data-width="200" data-show-faces="false"></div>
+    </div>
+</body>
+</html>

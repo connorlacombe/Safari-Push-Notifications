@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Safari Push Demo: Mobile Client</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<style>
+.header {
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 50%, 
+              from(rgba(176, 188, 205, 1)), to(rgba(129, 149, 175, 1)));
+ 	padding: 7px 10px;
+	background-color: rgb(109, 132, 162);
+	border-bottom-color:1px solid rgb(45, 54, 66);
+	border-top:1px solid rgb(109, 132, 162);
+	display: block;
+	height: 31px;
+	line-height: 30px;
+	display: block;
+	border-bottom: 1px solid #2C3542;
+	border-top: 1px solid #CDD5DF;
+	color: #fff;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background-color:#C5CCD4;
+      background-image: -webkit-gradient(linear, left top, right top, 
+          from(#C5CCD4), 
+          to(#CBD2D8), 
+          color-stop(0.6, #C5CCD4), 
+          color-stop(0.6, #CBD2D8));
+     -webkit-background-size:7px 7px;
+     background-repeat: repeat;
+	 font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+
+input[type=tel] {
+	padding: 0px;
+}
+input[type=text] {
+	pading: 5px;
+	height: 30px;
+	width: 240px;
+	margin: 10px;
+	font-size: 13px;
+}
+</style>
+<style>
+#floatingCirclesG{
+position:relative;
+width:40px;
+height:40px;
+-webkit-transform:scale(0.6);
+}
+
+.f_circleG{
+position:absolute;
+background-color:#3D3D3D;
+height:7px;
+width:7px;
+-webkit-border-radius:4px;
+-webkit-animation-name:f_fadeG;
+-webkit-animation-duration:0.72s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+}
+
+#frotateG_01{
+left:0;
+top:16px;
+-webkit-animation-delay:0.27s;
+}
+
+#frotateG_02{
+left:5px;
+top:5px;
+-webkit-animation-delay:0.36s;
+}
+
+#frotateG_03{
+left:16px;
+top:0;
+-webkit-animation-delay:0.45s;
+}
+
+#frotateG_04{
+right:5px;
+top:5px;
+-webkit-animation-delay:0.54s;
+}
+
+#frotateG_05{
+right:0;
+top:16px;
+-webkit-animation-delay:0.63s;
+}
+
+#frotateG_06{
+right:5px;
+bottom:5px;
+-webkit-animation-delay:0.72s;
+}
+
+#frotateG_07{
+left:16px;
+bottom:0;
+-webkit-animation-delay:0.81s;
+}
+
+#frotateG_08{
+left:5px;
+bottom:5px;
+-webkit-animation-delay:0.9s;
+}
+
+@-webkit-keyframes f_fadeG{
+0%{
+background-color:#FFFFFF}
+
+100%{
+background-color:#3D3D3D}
+
+} - See more at: http://cssload.net/#sthash.evgIwR18.dpuf
+</style>
+<script>
+$(function() {
+	
+	window.addEventListener("load",function() {
+		// Set a timeout...
+		setTimeout(function(){
+			//document.getElementById("code_1").focus();
+			// Hide the address bar!
+			window.scrollTo(0, 1);
+		}, 0);
+	});
+});
+var index = 1;
+function code_enter(e) {
+	if(e.keyCode == 8) {
+		//backspace
+		if(index > 1) {
+			index --;
+			document.getElementById("code_"+index).innerHTML = "";
+		}
+	}
+	else {
+		var key = String.fromCharCode(e.keyCode);
+		document.getElementById("code_"+index).innerHTML = key;
+		if(index < 4) {
+			index ++;
+		}
+		else {
+			document.getElementById("codebox").blur();
+			index = 5;
+			$("#load").fadeIn(300, function() {
+				check_code();
+			});
+		}
+	}
+}
+var id = "";
+function _push(title, body, button) {
+	$.post("//kandutech.net/v1/push/"+id, {"title": title, "body": body, "button": button});
+}
+function check_code() {
+	var code = document.getElementById("code_1").innerHTML + document.getElementById("code_2").innerHTML + document.getElementById("code_3").innerHTML + document.getElementById("code_4").innerHTML;
+	$.get("//kandutech.net/v1/verifyCode/"+code, function(d) {
+		$("#load").fadeOut(300);
+		if(d == "valid") {
+			id = code;
+			_push("Mobile Device Connected", "A mobile device has entered your push code.", "");
+			document.getElementById("enterCode").style.display = "none";
+			document.getElementById("sendNotification").style.display = "";
+		}
+		else {
+			index = 1;
+			$("#code_1, #code_2, #code_3, #code_4").html("");
+			alert("The code you entered is invalid.");
+		}
+	});
+}
+</script>
+</head>
+
+<body>
+	<div class="header">
+   		<div style="font-size: 20px; font-weight: 600; text-shadow: rgba(0,0,0,0.4) 0 -1px 0; text-align: center;">Safari Push Demo</div>
+    </div>
+    <div id="load" style="background: rgba(0,0,0,0.7); border-radius: 8px; width: 100px; height: 100px; top: 50%; left: 50%; margin-left: -50px; margin-top: -50px; position: absolute; display: none;">
+    <div id="floatingCirclesG" style="margin-left: auto; margin-right: auto; margin-top: 30px;">
+<div class="f_circleG" id="frotateG_01">
+</div>
+<div class="f_circleG" id="frotateG_02">
+</div>
+<div class="f_circleG" id="frotateG_03">
+</div>
+<div class="f_circleG" id="frotateG_04">
+</div>
+<div class="f_circleG" id="frotateG_05">
+</div>
+<div class="f_circleG" id="frotateG_06">
+</div>
+<div class="f_circleG" id="frotateG_07">
+</div>
+<div class="f_circleG" id="frotateG_08">
+</div>
+</div>
+    </div>
+    <div style="background: #fff; border-radius: 8px; box-shadow: inset rgba(0,0,0,0.14) 0 1px 1px, rgba(255,255,255,0.4) 0 1px 0; border: 1px solid #8f9499; min-height: 50px; margin: 10px; padding: 10px;">
+    	<div id="sendNotification" style="display: none; overflow: auto;">
+        	<input type="text" placeholder="Title..." id="title"><br>
+            <input type="text" placeholder="Body..." id="body"><br>
+            <input type="text" placeholder="Button..." id="button"><br>
+            <button style="float: right; margin-right: 10px; height: 40px; width: 100px; font-size: 15px;" onclick="_push(document.getElementById('title').value, document.getElementById('body').value, document.getElementById('button').value); $('#sendNotification input').val('');">Push!</button>
+        </div>
+    	<div id="enterCode">
+        	<div style="text-align: center; font-size: 14px;">Enter your 4-digit push code.</div>
+            <div style="overflow: auto;">
+            	<input type="tel" id="codebox" style="width: 1px; border: none; height: 1px; outline: none; opacity: 0;" onkeyup="code_enter(event);">
+            	<div style="border-radius: 8px; box-shadow: inset rgba(0,0,0,0.3) 0 1px 2px; border: 1px solid #A0A0A0; height: 70px; width: 50px; font-size: 50px; float: left; margin: 5px; margin-left: 20px; margin-top: 15px; text-align: center; padding-top: 10px; outline: none;" maxlength="1" id="code_1" onclick="document.getElementById('codebox').focus();"></div>
+                <div style="border-radius: 8px; box-shadow: inset rgba(0,0,0,0.3) 0 1px 2px; border: 1px solid #A0A0A0; height: 70px; width: 50px; font-size: 50px; float: left; margin: 5px; margin-top: 15px; text-align: center; padding-top: 10px; outline: none;" id="code_2" maxlength="1" onclick="document.getElementById('codebox').focus();"></div>
+                <div style="border-radius: 8px; box-shadow: inset rgba(0,0,0,0.3) 0 1px 2px; border: 1px solid #A0A0A0; height: 70px; width: 50px; font-size: 50px; float: left; margin: 5px; margin-top: 15px; text-align: center; padding-top: 10px; outline: none;" id="code_3" maxlength="1" onclick="document.getElementById('codebox').focus();"></div>
+                <div style="border-radius: 8px; box-shadow: inset rgba(0,0,0,0.3) 0 1px 2px; border: 1px solid #A0A0A0; height: 70px; width: 50px; font-size: 50px; float: left; margin: 5px; margin-top: 15px; text-align: center; padding-top: 10px; outline: none;" id="code_4" onclick="document.getElementById('codebox').focus();"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42055607-1', 'kandutech.net');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
