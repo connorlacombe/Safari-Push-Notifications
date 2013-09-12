@@ -90,7 +90,7 @@ function requestPermissions() {
 		if(c.permission === 'granted') {
 			document.getElementById("reqperm").style.display = "none";
 			document.getElementById("granted").style.display = "";
-			token = pResult.deviceToken;
+			token = c.deviceToken;
 		}
 		else if(c.permission === 'denied') {
 			document.getElementById("reqperm").style.display = "none";
